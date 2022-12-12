@@ -38,6 +38,11 @@ const JobCard = props => {
             <p className="text">{employmentType}</p>
           </div>
         </div>
+        <p className="salary">{packagePerAnnum}</p>
+      </div>
+      <div>
+        <h1 className="description-heading">Description</h1>
+        <p className="description-text">{jobDescription}</p>
       </div>
     </li>
   )

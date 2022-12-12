@@ -3,4 +3,25 @@
   flex-direction: column;
   align-items: center;
   padding-left: 0;
+  width: 100%;
+}
+
+.jobs-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+  width: 100%;
+  padding: 40px;
+}
+
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+@media screen and (min-width: 768px) {
+  .jobs-container {
+    flex-direction: row;
+  }
 }

@@ -2,46 +2,47 @@ import {Component} from 'react'
 import Cookies from 'js-cookie'
 
 import JobCard from '../JobCard'
+import FilterSection from '../FiltersSection'
 
 import './index.css'
 
-// const employmentTypesList = [
-//   {
-//     label: 'Full Time',
-//     employmentTypeId: 'FULLTIME',
-//   },
-//   {
-//     label: 'Part Time',
-//     employmentTypeId: 'PARTTIME',
-//   },
-//   {
-//     label: 'Freelance',
-//     employmentTypeId: 'FREELANCE',
-//   },
-//   {
-//     label: 'Internship',
-//     employmentTypeId: 'INTERNSHIP',
-//   },
-// ]
+const employmentTypesList = [
+  {
+    label: 'Full Time',
+    employmentTypeId: 'FULLTIME',
+  },
+  {
+    label: 'Part Time',
+    employmentTypeId: 'PARTTIME',
+  },
+  {
+    label: 'Freelance',
+    employmentTypeId: 'FREELANCE',
+  },
+  {
+    label: 'Internship',
+    employmentTypeId: 'INTERNSHIP',
+  },
+]
 
-// const salaryRangesList = [
-//   {
-//     salaryRangeId: '1000000',
-//     label: '10 LPA and above',
-//   },
-//   {
-//     salaryRangeId: '2000000',
-//     label: '20 LPA and above',
-//   },
-//   {
-//     salaryRangeId: '3000000',
-//     label: '30 LPA and above',
-//   },
-//   {
-//     salaryRangeId: '4000000',
-//     label: '40 LPA and above',
-//   },
-// ]
+const salaryRangesList = [
+  {
+    salaryRangeId: '1000000',
+    label: '10 LPA and above',
+  },
+  {
+    salaryRangeId: '2000000',
+    label: '20 LPA and above',
+  },
+  {
+    salaryRangeId: '3000000',
+    label: '30 LPA and above',
+  },
+  {
+    salaryRangeId: '4000000',
+    label: '40 LPA and above',
+  },
+]
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -121,7 +122,17 @@ class JobsSection extends Component {
   }
 
   render() {
-    return <div>{this.renderFinalJobsList()}</div>
+    return (
+      <div className="jobs-container">
+        <div className="filters-container">
+          <FilterSection
+            employmentTypesList={employmentTypesList}
+            salaryRangesList={salaryRangesList}
+          />
+        </div>
+        {this.renderFinalJobsList()}
+      </div>
+    )
   }
 }
 
