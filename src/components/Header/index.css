@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 15px;
+  padding: 10px 20px;
 }
 
 .logo {
@@ -40,10 +40,6 @@
 }
 
 @media screen and (min-width: 768px) {
-  .nav-bar {
-    padding: 20px 30px;
-  }
-
   .link-container {
     display: none;
   }

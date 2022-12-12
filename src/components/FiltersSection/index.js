@@ -44,7 +44,7 @@ const FiltersSection = props => {
   )
 
   return (
-    <div>
+    <div className="filters-profile-container">
       <ProfileDetails />
       {renderEmploymentTypesFilter()}
       {renderSalaryFilter()}

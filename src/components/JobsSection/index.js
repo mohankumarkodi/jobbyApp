@@ -1,6 +1,7 @@
+/* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-
+import Loader from 'react-loader-spinner'
 import JobCard from '../JobCard'
 import FilterSection from '../FiltersSection'
 
@@ -88,7 +89,7 @@ class JobsSection extends Component {
         rating: eachJob.rating,
         title: eachJob.title,
       }))
-      console.log(updatedData)
+      //   console.log(updatedData)
       this.setState({
         apiStatus: apiStatusConstants.success,
         jobsList: updatedData,
@@ -98,7 +99,7 @@ class JobsSection extends Component {
     }
   }
 
-  renderJobsListView = () => {
+  renderJobsSuccessView = () => {
     const {jobsList} = this.state
 
     return (
@@ -110,12 +111,45 @@ class JobsSection extends Component {
     )
   }
 
+  onClickJobsRetryBtn = () => this.getJobsApi()
+
+  renderJobsFailureView = () => (
+    <div className="jobs-failure-bg">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+        alt="failure-view"
+        className="jobs-failure-img"
+      />
+      <h1 className="jobs-failure-heading">Oops! Something Went Wrong</h1>
+      <p className="jobs-failure-desc">
+        We cannot seem to find the page you are looking for.
+      </p>
+      <button
+        type="button"
+        className="jobs-retry-btn"
+        onClick={this.onClickJobsRetryBtn}
+      >
+        Retry
+      </button>
+    </div>
+  )
+
+  renderJobsLoadingView = () => (
+    <div className="loader-container" testid="loader">
+      <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+    </div>
+  )
+
   renderFinalJobsList = () => {
     const {apiStatus} = this.state
 
     switch (apiStatus) {
       case apiStatusConstants.success:
-        return this.renderJobsListView()
+        return this.renderJobsSuccessView()
+      case apiStatusConstants.inProgress:
+        return this.renderJobsLoadingView()
+      case apiStatusConstants.failure:
+        return this.renderJobsFailureView()
       default:
         return null
     }
@@ -130,7 +164,7 @@ class JobsSection extends Component {
             salaryRangesList={salaryRangesList}
           />
         </div>
-        {this.renderFinalJobsList()}
+        <div className="jobs-view-container">{this.renderFinalJobsList()}</div>
       </div>
     )
   }
