@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import {BsSearch} from 'react-icons/bs'
 import Loader from 'react-loader-spinner'
+
 import JobCard from '../JobCard'
 import FilterSection from '../FiltersSection'
 
@@ -55,9 +57,10 @@ const apiStatusConstants = {
 class JobsSection extends Component {
   state = {
     apiStatus: apiStatusConstants.initial,
-    // employmentType: '',
-    // salaryRange: '',
+    employmentType: '',
+    salaryRange: '',
     jobsList: [],
+    searchInput: '',
   }
 
   componentDidMount() {
@@ -67,8 +70,8 @@ class JobsSection extends Component {
   getJobsApi = async () => {
     this.setState({apiStatus: apiStatusConstants.inProgress})
     const jwtToken = Cookies.get('jwt_token')
-    // const {employmentType, salaryRange} = this.state
-    const url = 'https://apis.ccbp.in/jobs'
+    const {employmentType, salaryRange, searchInput} = this.state
+    const url = `https://apis.ccbp.in/jobs?search=${searchInput}`
     const options = {
       method: 'GET',
       headers: {
@@ -155,16 +158,42 @@ class JobsSection extends Component {
     }
   }
 
+  onChangeSearchInput = event => {
+    this.setState({searchInput: event.target.value}, this.getJobsApi)
+  }
+
+  renderSearchInput = () => {
+    const {searchInput} = this.state
+    return (
+      <div className="search-container">
+        <input
+          type="search"
+          className="search-bar"
+          placeholder="Search"
+          value={searchInput}
+          onChange={this.onChangeSearchInput}
+        />
+        <BsSearch className="search-icon" />
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="jobs-container">
+        <div className="search-sm-container">{this.renderSearchInput()}</div>
         <div className="filters-container">
           <FilterSection
             employmentTypesList={employmentTypesList}
             salaryRangesList={salaryRangesList}
           />
         </div>
-        <div className="jobs-view-container">{this.renderFinalJobsList()}</div>
+        <div>
+          <div className="search-lg-container">{this.renderSearchInput()}</div>
+          <div className="jobs-view-container">
+            {this.renderFinalJobsList()}
+          </div>
+        </div>
       </div>
     )
   }
