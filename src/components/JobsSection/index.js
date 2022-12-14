@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import {BsSearch} from 'react-icons/bs'
 import Loader from 'react-loader-spinner'
+
 import JobCard from '../JobCard'
 import FilterSection from '../FiltersSection'
 
@@ -55,9 +57,10 @@ const apiStatusConstants = {
 class JobsSection extends Component {
   state = {
     apiStatus: apiStatusConstants.initial,
-    // employmentType: '',
-    // salaryRange: '',
     jobsList: [],
+    searchInput: '',
+    selectedSalary: '',
+    employmentList: [],
   }
 
   componentDidMount() {
@@ -67,8 +70,10 @@ class JobsSection extends Component {
   getJobsApi = async () => {
     this.setState({apiStatus: apiStatusConstants.inProgress})
     const jwtToken = Cookies.get('jwt_token')
-    // const {employmentType, salaryRange} = this.state
-    const url = 'https://apis.ccbp.in/jobs'
+    const {searchInput, selectedSalary, employmentList} = this.state
+    const updatedEmploymentList = employmentList.join(',')
+    // console.log(updatedEmploymentList)
+    const url = `https://apis.ccbp.in/jobs?search=${searchInput}&minimum_package=${selectedSalary}&employment_type=${updatedEmploymentList}`
     const options = {
       method: 'GET',
       headers: {
@@ -92,16 +97,32 @@ class JobsSection extends Component {
       //   console.log(updatedData)
       this.setState({
         apiStatus: apiStatusConstants.success,
-        jobsList: updatedData,
+        jobsList: updatedData.slice(0, 10),
       })
     } else {
       this.setState({apiStatus: apiStatusConstants.failure})
     }
   }
 
+  renderNoJobsView = () => (
+    <div className="jobs-failure-bg">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
+        alt="failure-view"
+        className="jobs-failure-img"
+      />
+      <h1 className="jobs-failure-heading">No Jobs Found</h1>
+      <p className="jobs-failure-desc">
+        We could not find any jobs. Try other filters.
+      </p>
+    </div>
+  )
+
   renderJobsSuccessView = () => {
     const {jobsList} = this.state
-
+    if (jobsList.length === 0) {
+      return this.renderNoJobsView()
+    }
     return (
       <ul className="job-cards-container">
         {jobsList.map(eachJob => (
@@ -155,16 +176,54 @@ class JobsSection extends Component {
     }
   }
 
-  renderSearchBar = () => {
+  onChangeSearchInput = event => {
+    this.setState({searchInput: event.target.value})
+  }
+
+  enterSearchInput = () => {
+    this.getJobsApi()
+  }
+
+  onClickEnter = event => {
+    if (event.key === 'Enter') {
+      this.getJobsApi()
+    }
+  }
+
+  onSelectSalary = salaryRangeId => {
+    this.setState({selectedSalary: salaryRangeId}, this.getJobsApi)
+  }
+
+  onSelectEmploymentType = employmentTypeId => {
+    const {employmentList} = this.state
+    if (employmentList.includes(employmentTypeId)) {
+      const index = employmentList.indexOf(employmentTypeId)
+      employmentList.splice(index, 1)
+    } else {
+      employmentList.push(employmentTypeId)
+    }
+    this.setState({employmentList}, this.getJobsApi)
+  }
+
+  renderSearchInput = () => {
     const {searchInput} = this.state
     return (
       <div className="search-container">
         <input
-          type="text"
-          className="search-input"
+          type="search"
+          className="search-bar"
+          placeholder="Search"
           value={searchInput}
           onChange={this.onChangeSearchInput}
+          onKeyDown={this.onClickEnter}
         />
+        <button
+          type="button"
+          className="search-btn"
+          onClick={this.enterSearchInput}
+        >
+          <BsSearch className="search-icon" />
+        </button>
       </div>
     )
   }
@@ -172,13 +231,21 @@ class JobsSection extends Component {
   render() {
     return (
       <div className="jobs-container">
+        <div className="search-sm-container">{this.renderSearchInput()}</div>
         <div className="filters-container">
           <FilterSection
             employmentTypesList={employmentTypesList}
             salaryRangesList={salaryRangesList}
+            selectSalary={this.onSelectSalary}
+            selectEmploymentType={this.onSelectEmploymentType}
           />
         </div>
-        <div className="jobs-view-container">{this.renderFinalJobsList()}</div>
+        <div>
+          <div className="search-lg-container">{this.renderSearchInput()}</div>
+          <div className="jobs-view-container">
+            {this.renderFinalJobsList()}
+          </div>
+        </div>
       </div>
     )
   }

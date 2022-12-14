@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'
 import {AiFillStar} from 'react-icons/ai'
 import {MdLocationOn} from 'react-icons/md'
 import {BsFillBriefcaseFill} from 'react-icons/bs'
@@ -16,35 +17,41 @@ const JobCard = props => {
     title,
   } = jobDetails
   return (
-    <li className="job-card">
-      <div className="logo-container">
-        <img src={companyLogoUrl} alt="company logo" className="company-logo" />
-        <div className="title-container">
-          <h1 className="company-title">{title}</h1>
-          <div className="rating-container">
-            <AiFillStar color="#fbbf24" />
-            <p className="company-rating">{rating}</p>
+    <Link to={`/jobs/${id}`} className="job-id-link">
+      <li className="job-card">
+        <div className="logo-container">
+          <img
+            src={companyLogoUrl}
+            alt="company logo"
+            className="company-logo"
+          />
+          <div className="title-container">
+            <h1 className="company-title">{title}</h1>
+            <div className="rating-container">
+              <AiFillStar color="#fbbf24" />
+              <p className="company-rating">{rating}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="location-container">
-        <div className="location-details">
-          <div className="details-container">
-            <MdLocationOn color="#fff" />
-            <p className="text">{location}</p>
+        <div className="location-container">
+          <div className="location-details">
+            <div className="details-container">
+              <MdLocationOn color="#fff" />
+              <p className="text">{location}</p>
+            </div>
+            <div className="details-container">
+              <BsFillBriefcaseFill color="#fff" />
+              <p className="text">{employmentType}</p>
+            </div>
           </div>
-          <div className="details-container">
-            <BsFillBriefcaseFill color="#fff" />
-            <p className="text">{employmentType}</p>
-          </div>
+          <p className="salary">{packagePerAnnum}</p>
         </div>
-        <p className="salary">{packagePerAnnum}</p>
-      </div>
-      <div>
-        <h1 className="description-heading">Description</h1>
-        <p className="description-text">{jobDescription}</p>
-      </div>
-    </li>
+        <div>
+          <h1 className="description-heading">Description</h1>
+          <p className="description-text">{jobDescription}</p>
+        </div>
+      </li>
+    </Link>
   )
 }
 
