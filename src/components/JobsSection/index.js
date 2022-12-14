@@ -97,7 +97,7 @@ class JobsSection extends Component {
       //   console.log(updatedData)
       this.setState({
         apiStatus: apiStatusConstants.success,
-        jobsList: updatedData.slice(0, 10),
+        jobsList: updatedData,
       })
     } else {
       this.setState({apiStatus: apiStatusConstants.failure})
@@ -108,7 +108,7 @@ class JobsSection extends Component {
     <div className="jobs-failure-bg">
       <img
         src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
-        alt="failure-view"
+        alt="no jobs"
         className="jobs-failure-img"
       />
       <h1 className="jobs-failure-heading">No Jobs Found</h1>
@@ -138,7 +138,7 @@ class JobsSection extends Component {
     <div className="jobs-failure-bg">
       <img
         src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
-        alt="failure-view"
+        alt="failure view"
         className="jobs-failure-img"
       />
       <h1 className="jobs-failure-heading">Oops! Something Went Wrong</h1>
@@ -221,6 +221,7 @@ class JobsSection extends Component {
           type="button"
           className="search-btn"
           onClick={this.enterSearchInput}
+          testid="searchButton"
         >
           <BsSearch className="search-icon" />
         </button>

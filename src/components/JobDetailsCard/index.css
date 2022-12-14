@@ -91,6 +91,25 @@
   color: #fff;
 }
 
+.description-link-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.website-link {
+  text-decoration: none;
+  color: #b6c5ff;
+  font-family: 'Roboto';
+  font-size: 22px;
+}
+
+.anchor-icon {
+  margin-left: 5px;
+  padding-top: 3px;
+  font-size: 24px;
+}
+
 .job-details-description-heading {
   font-family: 'Roboto';
   color: #fff;
@@ -173,8 +192,49 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 70vw;
-  width: 100%;    
+  width: 100%;
+  height: 100vh;
+}
+
+.job-details-failure-img {
+  padding-top: 50px;
+  width: 40%;
+}
+
+.job-details-failure-heading {
+  color: #fff;
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+.job-details-failure-desc {
+  color: #f1f5f9;
+  font-family: 'Roboto';
+  font-size: 12px;
+  width: 50%;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.job-details-retry-btn {
+  background-color: #4f46e5;
+  color: #fff;
+  font-family: 'Roboto';
+  font-size: 12px;
+  padding: 10px 24px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.job-details-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 @media screen and (min-width: 768px) {
@@ -231,5 +291,9 @@
 
   .skill-name {
     font-size: 18px;
+  }
+
+  .job-details-failure-heading {
+    font-size: 32px;
   }
 }

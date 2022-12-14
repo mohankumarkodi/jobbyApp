@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner'
 import {AiFillStar} from 'react-icons/ai'
 import {MdLocationOn} from 'react-icons/md'
 import {BsFillBriefcaseFill} from 'react-icons/bs'
+import {FiExternalLink} from 'react-icons/fi'
 
 import SimilarJobs from '../SimilarJobs'
 import Header from '../Header'
@@ -128,6 +129,7 @@ class JobDetailsCard extends Component {
     const {description, imageUrl} = companyLife
     const {
       companyLogoUrl,
+      companyWebsiteUrl,
       employmentType,
       jobDescription,
       location,
@@ -143,7 +145,7 @@ class JobDetailsCard extends Component {
             <div className="job-details-logo-container">
               <img
                 src={companyLogoUrl}
-                alt="company logo"
+                alt="job details company logo"
                 className="job-details-company-logo"
               />
               <div className="job-details-title-container">
@@ -168,7 +170,20 @@ class JobDetailsCard extends Component {
               <p className="job-details-salary">{packagePerAnnum}</p>
             </div>
             <div>
-              <h1 className="job-details-description-heading">Description</h1>
+              <div className="description-link-container">
+                <h1 className="job-details-description-heading">Description</h1>
+                <a
+                  href={companyWebsiteUrl}
+                  className="website-link"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Visit
+                  <span>
+                    <FiExternalLink className="anchor-icon" />
+                  </span>
+                </a>
+              </div>
               <p className="job-details-description-text">{jobDescription}</p>
             </div>
           </div>
@@ -202,7 +217,7 @@ class JobDetailsCard extends Component {
       <img
         src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
         alt="failure view"
-        className="job-details-failure-view"
+        className="job-details-failure-img"
       />
       <h1 className="job-details-failure-heading">
         Oops! Something Went Wrong
@@ -221,7 +236,7 @@ class JobDetailsCard extends Component {
   )
 
   jobDetailsLoadingView = () => (
-    <div className="loader-container" testid="loader">
+    <div className="job-details-loader-container" testid="loader">
       <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
     </div>
   )

@@ -3,11 +3,9 @@
   flex-direction: column;
   background-color: #272727;
   margin-bottom: 20px;
-  min-width: 100%;
   max-width: 400px;
   border-radius: 12px;
   padding: 30px;
-  margin-right: 30px;
   margin-bottom: 30px;
 }
 
@@ -91,4 +89,10 @@
   font-size: 16px;
   line-height: 1.5;
   font-weight: 400;
+}
+
+@media screen and (min-width: 768px) {
+  .similar-jobs-job-card {
+    margin-right: 30px;
+  }
 }

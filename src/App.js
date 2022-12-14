@@ -55,8 +55,8 @@ const App = () => (
     <Route exact path="/login" component={Login} />
     <ProtectedRoute exact path="/" component={Home} />
     <ProtectedRoute exact path="/jobs" component={JobsRoute} />
-    <ProtectedRoute path="/not-found" component={NotFound} />
     <ProtectedRoute path="/jobs/:id" component={JobDetailsCard} />
+    <Route path="/not-found" component={NotFound} />
     <Redirect to="/not-found" />
   </Switch>
 )
