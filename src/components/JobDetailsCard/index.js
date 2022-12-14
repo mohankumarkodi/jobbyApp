@@ -7,6 +7,7 @@ import {MdLocationOn} from 'react-icons/md'
 import {BsFillBriefcaseFill} from 'react-icons/bs'
 
 import SimilarJobs from '../SimilarJobs'
+import Header from '../Header'
 import './index.css'
 
 const apiStatusConstants = {
@@ -18,7 +19,7 @@ const apiStatusConstants = {
 
 class JobDetailsCard extends Component {
   state = {
-    apistatus: apiStatusConstants.initial,
+    apiStatus: apiStatusConstants.initial,
     jobDetails: {},
     companyLife: {},
     skills: [],
@@ -30,7 +31,7 @@ class JobDetailsCard extends Component {
   }
 
   getJobDetailsApi = async () => {
-    this.setState({apistatus: apiStatusConstants.inProgress})
+    this.setState({apiStatus: apiStatusConstants.inProgress})
     const {match} = this.props
     const {params} = match
     const {id} = params
@@ -91,7 +92,7 @@ class JobDetailsCard extends Component {
         companyLife: updatedLifeAtCompany,
         skills: updatedSkills,
         similarJobs: updatedSimilarJobs,
-        apiStatus: apiStatusConstants.failure,
+        apiStatus: apiStatusConstants.success,
       })
     } else {
       this.setState({apiStatus: apiStatusConstants.failure})
@@ -226,7 +227,7 @@ class JobDetailsCard extends Component {
   )
 
   renderJobDetails = () => {
-    const {apistatus} = this.state
+    const {apiStatus} = this.state
 
     switch (apiStatus) {
       case apiStatusConstants.success:
@@ -241,7 +242,12 @@ class JobDetailsCard extends Component {
   }
 
   render() {
-    return <div className="job-details-bg">{this.renderJobDetails()}</div>
+    return (
+      <>
+        <Header />
+        <div className="job-details-bg">{this.renderJobDetails()}</div>
+      </>
+    )
   }
 }
 
