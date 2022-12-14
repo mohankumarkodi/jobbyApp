@@ -155,6 +155,20 @@ class JobsSection extends Component {
     }
   }
 
+  renderSearchBar = () => {
+    const {searchInput} = this.state
+    return (
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          value={searchInput}
+          onChange={this.onChangeSearchInput}
+        />
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="jobs-container">

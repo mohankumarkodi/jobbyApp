@@ -53,7 +53,7 @@ const App = () => (
   <Switch>
     <Route exact path="/login" component={Login} />
     <ProtectedRoute exact path="/" component={Home} />
-    <ProtectedRoute exact to="/jobs" component={JobsRoute} />
+    <ProtectedRoute exact path="/jobs" component={JobsRoute} />
     <ProtectedRoute path="/not-found" component={NotFound} />
     <Redirect to="/not-found" />
   </Switch>
